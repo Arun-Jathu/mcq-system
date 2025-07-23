@@ -1,0 +1,9 @@
+.exam-list {
+  padding: 20px;
+}
+.exam-item {
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f0f0f0;
+}

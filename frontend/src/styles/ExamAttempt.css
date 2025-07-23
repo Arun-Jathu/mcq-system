@@ -1,0 +1,23 @@
+.exam-attempt {
+  padding: 20px;
+}
+.question-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+label {
+  display: block;
+  margin: 5px 0;
+}
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
