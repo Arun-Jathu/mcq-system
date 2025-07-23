@@ -1,113 +1,147 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import "../styles/ExamAttempt.css";
 
 function ExamAttempt() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/api/exams/${id}/questions`, {
-        headers: { "X-Requested-With": "XMLHttpRequest" },
-      })
-      .then((response) => {
-        console.log(
-          "Full Questions data:",
-          JSON.stringify(response.data, null, 2)
-        );
-        console.log("Questions data:", response.data);
+    const fetchQuestions = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/exams/${id}/questions`);
         setQuestions(response.data);
-      })
-      .catch((error) => {
+        // Assume time is in minutes from the exam data or default to 10
+        const examTime = response.data[0]?.time
+          ? parseInt(response.data[0].time)
+          : 10;
+        setTimeLeft(examTime * 60); // Convert to seconds
+      } catch (error) {
         console.error("Error fetching questions:", error);
-        setError(
-          `Failed to load questions. ${
-            error.response?.statusText || error.message
-          }`
-        );
-      })
-      .finally(() => setLoading(false));
+        setError("Failed to load questions. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchQuestions();
+
+    // Start timer
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 0) {
+          clearInterval(timerRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerRef.current); // Cleanup on unmount
   }, [id]);
 
-  const handleAnswerChange = (questionId, option) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: option }));
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
-  const handleSubmit = async () => {
-    setSubmitting(true);
-    const submission = questions.map((q) => ({
-      question_id: q._id,
-      selected_option: answers[q._id] || "",
-    }));
-    console.log("Submission data:", submission);
-    try {
-      const response = await axios.post(
-        `/api/exams/${id}/submit`,
-        { answers: submission },
-        {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        }
-      );
-      console.log("Submission result:", response.data);
-      navigate(`/result/${response.data.result_id}`);
-    } catch (error) {
-      console.error("Error submitting answers:", error);
-      setError(
-        `Submission failed. ${error.response?.statusText || error.message}`
-      );
-    } finally {
-      setSubmitting(false);
-    }
+  const handleAnswerChange = (qIndex, option) => {
+    setAnswers((prev) => ({ ...prev, [qIndex]: option }));
   };
 
+  const progress =
+    questions.length > 0
+      ? (Object.keys(answers).length / questions.length) * 100
+      : 0;
+
+  if (loading) return <div>Loading exam...</div>;
   if (error) return <div>{error}</div>;
-  if (loading)
-    return (
-      <div>
-        Loading questions... <span className="loader">⏳</span>
-      </div>
-    );
-  if (submitting)
-    return (
-      <div>
-        Submitting answers... <span className="loader">⏳</span>
-      </div>
-    );
+  if (timeLeft === 0) return <div>Time's up! Exam submitted.</div>;
 
   return (
-    <div className="exam-attempt">
-      <h2>Exam Questions</h2>
-      {questions.map((question) => (
-        <div key={question._id} className="question-item">
-          <p>{question.question_text || "No question text"}</p>
-          {question.options
-            ? question.options.map((opt, index) => (
-                <label key={index}>
+    <div className="exam-page">
+      <div className="exam-container">
+        <div className="exam-header">
+          <div className="header-content">
+            <h2 className="exam-title">
+              Exam: {questions[0]?.title || "Untitled"}
+            </h2>
+            <div className="timer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="timer-icon"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{formatTime(timeLeft)}</span>
+            </div>
+          </div>
+          <div className="progress-bar-container">
+            <div className="progress-bar-bg">
+              <div
+                className="progress-bar"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <div className="progress-text">
+              <span>
+                Question {Object.keys(answers).length + 1} of {questions.length}
+              </span>
+              <span>{Math.round(progress)}%</span>
+            </div>
+          </div>
+        </div>
+        <div className="question-section">
+          {questions.map((q, index) => (
+            <div key={index} className="question-item">
+              <h3 className="question-text">{q.question}</h3>
+              {q.options.map((option, optIndex) => (
+                <div key={optIndex} className="option-item">
                   <input
                     type="radio"
-                    name={question._id}
-                    value={opt}
-                    onChange={(e) =>
-                      handleAnswerChange(question._id, e.target.value)
-                    }
+                    id={`q${index}-o${optIndex}`}
+                    name={`question-${index}`}
+                    value={option}
+                    checked={answers[index] === option}
+                    onChange={() => handleAnswerChange(index, option)}
                   />
-                  {opt}
-                </label>
-              ))
-            : null}
+                  <label
+                    htmlFor={`q${index}-o${optIndex}`}
+                    className="option-label"
+                  >
+                    {option}
+                  </label>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
-      ))}
-      <button onClick={handleSubmit} disabled={loading || submitting}>
-        Submit Answers
-      </button>
+        <div className="submit-section">
+          <button
+            className="submit-button"
+            onClick={() => console.log("Exam submitted:", answers)}
+          >
+            Submit Exam
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

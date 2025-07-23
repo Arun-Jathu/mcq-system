@@ -12,15 +12,17 @@
 .header-content {
   max-width: 7xl;
   margin: 0 auto;
-  padding: 0.75rem 1.5rem; /* Adjusted padding to fit height */
+  padding: 0.5rem 1.5rem; /* Reduced padding for tighter fit */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%; /* Ensure full height usage */
 }
 
 .logo-container {
   display: flex;
   align-items: center;
+  line-height: 1; /* Ensure text aligns with logo */
 }
 
 .logo {
@@ -28,6 +30,7 @@
   width: 2rem;
   color: #4f46e5;
   transition: transform 0.3s ease;
+  vertical-align: middle; /* Align with title text */
 }
 
 .logo-container:hover .logo {
@@ -39,20 +42,24 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: #1f2937;
+  vertical-align: middle; /* Align with logo */
 }
 
 .nav-links {
   display: flex;
+  align-items: center; /* Vertically center nav links */
   gap: 2rem;
+  margin-left: 2rem; /* Add spacing from logo/title */
 }
 
 .nav-link {
-  padding: 0.5rem 0.75rem;
+  padding: 0.25rem 0.75rem; /* Reduced padding for tighter fit */
   font-size: 0.875rem;
   font-weight: 500;
   color: #6b7280;
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
+  line-height: 1.5; /* Match text baseline */
 }
 
 .nav-link:hover {
@@ -64,18 +71,30 @@
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+.logout:hover {
+  color: #4f46e5;
 }
 
 .user-profile {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  height: 100%; /* Ensure full height */
+  padding: 0 0.5rem; /* Add internal padding */
 }
 
 .username {
   font-size: 0.875rem;
   font-weight: 500;
   color: #374151;
+  line-height: 1.5; /* Match baseline */
 }
 
 .avatar {
@@ -88,6 +107,7 @@
   justify-content: center;
   color: white;
   font-weight: 500;
+  line-height: 2rem; /* Center text inside avatar */
 }
 
 @media (max-width: 768px) {
@@ -96,7 +116,7 @@
   }
 
   .header-content {
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 1rem; /* Reduced padding on mobile */
     height: 3rem; /* Reduced height on mobile */
   }
 
@@ -104,12 +124,23 @@
     font-size: 1.125rem;
   }
 
+  .logo {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+
   .user-profile {
     gap: 0.5rem;
+    padding: 0 0.25rem;
   }
 
   .avatar {
     height: 1.75rem;
     width: 1.75rem;
+    line-height: 1.75rem; /* Adjust for mobile size */
+  }
+
+  .username {
+    font-size: 0.75rem;
   }
 }
