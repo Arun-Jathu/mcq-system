@@ -5,17 +5,20 @@ import Login from "./pages/Login";
 import ExamList from "./pages/ExamList";
 import ExamAttempt from "./pages/ExamAttempt";
 import Result from "./pages/Result";
-import "./styles/Header.css";
+import "./styles/App.css";
+
 function App() {
   return (
     <Router>
       <Header />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/exams" element={<ExamList />} />
-        <Route path="/exam/:id" element={<ExamAttempt />} />
-        <Route path="/result/:result_id" element={<Result />} />
-      </Routes>
+      <div className="App-content">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/exams" element={<ExamList />} />
+          <Route path="/exam/:id" element={<ExamAttempt />} />
+          <Route path="/result/:result_id" element={<Result />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

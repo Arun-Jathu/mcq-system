@@ -2,13 +2,35 @@
 .App {
   text-align: center;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f4f8;
+  min-height: 100vh;
+}
+
+.App-content {
+  padding-top: 4rem; /* Matches header height (3.5rem) + padding */
+  min-height: calc(100vh - 4rem); /* Ensure content fills remaining space */
 }
 
 h1 {
-  color: #333;
+  color: #1f2937;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 p {
-  color: #666;
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .App-content {
+    padding-top: 3.5rem; /* Adjusted for mobile header */
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
 }

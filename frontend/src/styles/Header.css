@@ -1,4 +1,4 @@
-/* Header.css */
+/* frontend/src/styles/Header.css */
 .header {
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -6,12 +6,13 @@
   top: 0;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
+  height: 3.5rem; /* Fixed height for consistency */
 }
 
 .header-content {
   max-width: 7xl;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.5rem; /* Adjusted padding to fit height */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,11 +92,12 @@
 
 @media (max-width: 768px) {
   .nav-links {
-    display: none; /* Hide on mobile, add a hamburger menu if needed */
+    display: none; /* Hide on mobile, add hamburger menu if needed */
   }
 
   .header-content {
-    padding: 1rem;
+    padding: 0.5rem 1rem;
+    height: 3rem; /* Reduced height on mobile */
   }
 
   .title {
