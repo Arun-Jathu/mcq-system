@@ -1,5 +1,5 @@
 /* frontend/src/styles/Header.css */
-.header {
+.header-wrapper {
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   position: sticky;
@@ -9,7 +9,7 @@
   height: 3.5rem; /* Fixed height for consistency */
 }
 
-.header-content {
+.header-wrapper .header-content {
   max-width: 7xl;
   margin: 0 auto;
   padding: 0.5rem 1.5rem; /* Reduced padding for tighter fit */
@@ -19,13 +19,13 @@
   height: 100%; /* Ensure full height usage */
 }
 
-.logo-container {
+.header-wrapper .logo-container {
   display: flex;
   align-items: center;
   line-height: 1; /* Ensure text aligns with logo */
 }
 
-.logo {
+.header-wrapper .logo {
   height: 2rem;
   width: 2rem;
   color: #4f46e5;
@@ -33,11 +33,11 @@
   vertical-align: middle; /* Align with title text */
 }
 
-.logo-container:hover .logo {
+.header-wrapper .logo-container:hover .logo {
   transform: scale(1.1);
 }
 
-.title {
+.header-wrapper .title {
   margin-left: 0.5rem;
   font-size: 1.25rem;
   font-weight: 700;
@@ -45,14 +45,14 @@
   vertical-align: middle; /* Align with logo */
 }
 
-.nav-links {
+.header-wrapper .nav-links {
   display: flex;
   align-items: center; /* Vertically center nav links */
   gap: 2rem;
   margin-left: 2rem; /* Add spacing from logo/title */
 }
 
-.nav-link {
+.header-wrapper .nav-link {
   padding: 0.25rem 0.75rem; /* Reduced padding for tighter fit */
   font-size: 0.875rem;
   font-weight: 500;
@@ -62,12 +62,12 @@
   line-height: 1.5; /* Match text baseline */
 }
 
-.nav-link:hover {
+.header-wrapper .nav-link:hover {
   color: #4f46e5;
   transform: translateY(-2px);
 }
 
-.logout {
+.header-wrapper .logout {
   background: none;
   border: none;
   cursor: pointer;
@@ -78,11 +78,11 @@
   transition: color 0.2s ease;
 }
 
-.logout:hover {
+.header-wrapper .logout:hover {
   color: #4f46e5;
 }
 
-.user-profile {
+.header-wrapper .user-profile {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -90,14 +90,14 @@
   padding: 0 0.5rem; /* Add internal padding */
 }
 
-.username {
+.header-wrapper .username {
   font-size: 0.875rem;
   font-weight: 500;
   color: #374151;
   line-height: 1.5; /* Match baseline */
 }
 
-.avatar {
+.header-wrapper .avatar {
   height: 2rem;
   width: 2rem;
   background-color: #4f46e5;
@@ -111,36 +111,36 @@
 }
 
 @media (max-width: 768px) {
-  .nav-links {
+  .header-wrapper .nav-links {
     display: none; /* Hide on mobile, add hamburger menu if needed */
   }
 
-  .header-content {
+  .header-wrapper .header-content {
     padding: 0.25rem 1rem; /* Reduced padding on mobile */
     height: 3rem; /* Reduced height on mobile */
   }
 
-  .title {
+  .header-wrapper .title {
     font-size: 1.125rem;
   }
 
-  .logo {
+  .header-wrapper .logo {
     height: 1.75rem;
     width: 1.75rem;
   }
 
-  .user-profile {
+  .header-wrapper .user-profile {
     gap: 0.5rem;
     padding: 0 0.25rem;
   }
 
-  .avatar {
+  .header-wrapper .avatar {
     height: 1.75rem;
     width: 1.75rem;
     line-height: 1.75rem; /* Adjust for mobile size */
   }
 
-  .username {
+  .header-wrapper .username {
     font-size: 0.75rem;
   }
 }

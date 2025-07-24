@@ -1,33 +1,33 @@
 /* frontend/src/styles/ExamList.css */
-.exam-list-page {
+.exam-list-page-wrapper {
   padding: 1rem;
   background-color: #f0f4f8;
 }
 
-.exam-list-content {
+.exam-list-page-wrapper .exam-list-content {
   max-width: 7xl;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
-.header-section {
+.exam-list-page-wrapper .header-section {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.page-title {
+.exam-list-page-wrapper .page-title {
   font-size: 1.875rem;
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 0.5rem;
 }
 
-.page-subtitle {
+.exam-list-page-wrapper .page-subtitle {
   font-size: 0.875rem;
   color: #6b7280;
 }
 
-.add-button {
+.exam-list-page-wrapper .add-button {
   margin-top: 1rem;
   width: 2.5rem;
   height: 2.5rem;
@@ -44,27 +44,27 @@
   justify-content: center;
 }
 
-.add-button:hover {
+.exam-list-page-wrapper .add-button:hover {
   background-color: #4338ca;
   transform: scale(1.1);
 }
 
-.add-button:focus {
+.exam-list-page-wrapper .add-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5);
 }
 
-.plus-sign {
+.exam-list-page-wrapper .plus-sign {
   line-height: 1;
 }
 
-.exam-grid {
+.exam-list-page-wrapper .exam-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   gap: 1.5rem;
 }
 
-.exam-card {
+.exam-list-page-wrapper .exam-card {
   background-color: white;
   border-radius: 0.5rem;
   overflow: hidden;
@@ -73,61 +73,61 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.exam-card:hover {
+.exam-list-page-wrapper .exam-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.card-header {
+.exam-list-page-wrapper .card-header {
   height: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.gradient-blue {
+.exam-list-page-wrapper .gradient-blue {
   background: linear-gradient(to right, #3b82f6, #6366f1);
 }
 
-.gradient-purple {
+.exam-list-page-wrapper .gradient-purple {
   background: linear-gradient(to right, #a855f7, #d946ef);
 }
 
-.gradient-green {
+.exam-list-page-wrapper .gradient-green {
   background: linear-gradient(to right, #10b981, #14b8a6);
 }
 
-.gradient-red {
+.exam-list-page-wrapper .gradient-red {
   background: linear-gradient(to right, #ef4444, #dc2626);
 }
 
-.gradient-orange {
+.exam-list-page-wrapper .gradient-orange {
   background: linear-gradient(to right, #f97316, #ea580c);
 }
 
-.gradient-teal {
+.exam-list-page-wrapper .gradient-teal {
   background: linear-gradient(to right, #2dd4bf, #14b8a6);
 }
 
-.card-icon {
+.exam-list-page-wrapper .card-icon {
   height: 4rem;
   width: 4rem;
   color: white;
 }
 
-.card-content {
+.exam-list-page-wrapper .card-content {
   padding: 1.5rem;
   text-align: left;
 }
 
-.card-title {
+.exam-list-page-wrapper .card-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 0.5rem;
 }
 
-.card-detail {
+.exam-list-page-wrapper .card-detail {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -136,17 +136,17 @@
   margin-bottom: 0.75rem;
 }
 
-.detail-icon {
+.exam-list-page-wrapper .detail-icon {
   height: 1.25rem;
   width: 1.25rem;
   color: #6b7280;
 }
 
-.card-action {
+.exam-list-page-wrapper .card-action {
   margin-top: 1.5rem;
 }
 
-.start-button {
+.exam-list-page-wrapper .start-button {
   width: 100%;
   padding: 0.5rem;
   background-color: #4f46e5;
@@ -159,45 +159,49 @@
   transition: background-color 0.2s;
 }
 
-.start-button:hover {
+.exam-list-page-wrapper .start-button:hover {
   background-color: #4338ca;
 }
 
-.start-button:focus {
+.exam-list-page-wrapper .start-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5);
 }
 
-.no-exams {
+.exam-list-page-wrapper .no-exams {
   text-align: center;
   color: #6b7280;
 }
 
 @media (max-width: 768px) {
-  .exam-grid {
+  .exam-list-page-wrapper {
+    padding: 0.5rem;
+  }
+
+  .exam-list-page-wrapper .exam-grid {
     grid-template-columns: 1fr;
   }
 
-  .page-title {
+  .exam-list-page-wrapper .page-title {
     font-size: 1.5rem;
   }
 
-  .add-button {
+  .exam-list-page-wrapper .add-button {
     width: 2.25rem;
     height: 2.25rem;
     font-size: 1.25rem;
   }
 
-  .card-header {
+  .exam-list-page-wrapper .card-header {
     height: 6rem;
   }
 
-  .card-icon {
+  .exam-list-page-wrapper .card-icon {
     height: 3rem;
     width: 3rem;
   }
 
-  .card-title {
+  .exam-list-page-wrapper .card-title {
     font-size: 1.125rem;
   }
 }

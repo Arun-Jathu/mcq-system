@@ -17,7 +17,7 @@ function Header() {
   };
 
   return (
-    <header className="header">
+    <header className="header-wrapper">
       <div className="header-content">
         <div className="logo-container">
           <svg

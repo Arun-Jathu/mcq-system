@@ -1,5 +1,5 @@
 /* frontend/src/styles/App.css */
-.App {
+.app-wrapper {
   text-align: center;
   padding: 20px;
   font-family: 'Poppins', sans-serif;
@@ -7,30 +7,29 @@
   min-height: 100vh;
 }
 
-.App-content {
-  padding-top: 4rem; /* Matches header height (3.5rem) + padding */
-  min-height: calc(100vh - 4rem); /* Ensure content fills remaining space */
+.app-wrapper .App-content {
+  min-height: calc(100vh - 3.5rem); /* Adjusted to match header height */
 }
 
-h1 {
+.app-wrapper h1 {
   color: #1f2937;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-p {
+.app-wrapper p {
   color: #6b7280;
   font-size: 0.875rem;
   line-height: 1.5;
 }
 
 @media (max-width: 768px) {
-  .App-content {
-    padding-top: 3.5rem; /* Adjusted for mobile header */
+  .app-wrapper .App-content {
+    padding-top: 0; /* Remove padding, handled by page wrappers */
     padding: 10px;
   }
 
-  h1 {
+  .app-wrapper h1 {
     font-size: 1.5rem;
   }
 }

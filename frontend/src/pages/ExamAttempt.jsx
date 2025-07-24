@@ -85,8 +85,7 @@ function ExamAttempt() {
       const resultId = response.data.result_id;
       if (resultId) {
         console.log("Navigating to:", `/result/${resultId}`);
-        navigate(`/result/${resultId}`, { replace: true }); // Use replace to avoid back navigation issues
-        // Verify navigation by checking window.location
+        navigate(`/result/${resultId}`, { replace: true });
         setTimeout(() => {
           if (window.location.pathname !== `/result/${resultId}`) {
             console.error("Navigation failed, forcing redirect");
@@ -128,7 +127,7 @@ function ExamAttempt() {
     );
 
   return (
-    <div className="exam-page">
+    <div className="exam-attempt-page-wrapper">
       <div className="exam-container">
         <div className="exam-header">
           <div className="header-content">

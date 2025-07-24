@@ -48,7 +48,7 @@ function ExamList() {
   };
 
   return (
-    <div className="exam-list-page">
+    <div className="exam-list-page-wrapper">
       <div className="exam-list-content">
         <div className="header-section">
           <h1 className="page-title">Available Exams</h1>

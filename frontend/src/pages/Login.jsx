@@ -25,7 +25,7 @@ function Login() {
   };
 
   return (
-    <div className="login-page">
+    <div className="login-page-wrapper">
       <div className="login-container">
         <div className="login-card">
           <div className="logo-container">
