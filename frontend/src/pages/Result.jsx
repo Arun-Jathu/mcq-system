@@ -1,48 +1,156 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 import "../styles/Result.css";
 
 function Result() {
-  const { result_id } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/api/exams/result/${result_id}`, {
-        // Adjust endpoint if needed
-        headers: { "X-Requested-With": "XMLHttpRequest" },
-      })
-      .then((response) => {
-        console.log("Result data:", response.data);
+    if (!id) {
+      setError("Invalid result ID");
+      setLoading(false);
+      return;
+    }
+
+    const fetchResult = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/exams/result/${id}`, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        });
+        console.log(
+          "Full Result data:",
+          JSON.stringify(response.data, null, 2)
+        );
         setResult(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching result:", error);
         setError(
           `Failed to load result. ${
             error.response?.statusText || error.message
           }`
         );
-      })
-      .finally(() => setLoading(false));
-  }, [result_id]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResult();
 
+    // Confetti effect on load
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }, [id]);
+
+  const handleBackToExams = () => navigate("/exams");
+  const handleRetryExam = () => {
+    if (result?.exam_id) {
+      navigate(`/exam/${result.exam_id}`);
+    } else {
+      setError("No exam ID available to retry");
+    }
+  };
+
+  if (loading)
+    return (
+      <div>
+        Loading results... <span className="loader">⏳</span>
+      </div>
+    );
   if (error) return <div>{error}</div>;
-  if (loading) return <div>Loading result...</div>;
+  if (!result) return <div>No result data available</div>;
+
+  const totalQuestions =
+    result.totalQuestions || (result.answers ? result.answers.length : 0);
+  const correctAnswers =
+    result.score || result.answers?.filter((a) => a.is_correct).length || 0;
+  const progress =
+    totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+
+  // Use answers array with nested question_id
+  const reviewData = result.answers || [];
 
   return (
-    <div className="result">
-      <h2>Exam Result</h2>
-      {result && (
-        <p>
-          Your score: {result.score} out of{" "}
-          {result.totalQuestions || result.answers.length}
-        </p>
-      )}
+    <div className="result-page-wrapper">
+      <div className="result-container">
+        <div className="result-header">
+          <div className="header-circle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="header-icon"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <h2 className="result-title">Quiz Completed!</h2>
+          <div className="score-section">
+            <div className="progress-ring" style={{ "--progress": progress }}>
+              <svg>
+                <circle className="ring-bg" />
+                <circle className="ring-progress" />
+              </svg>
+              <span className="score-value">
+                {correctAnswers}
+                <span className="total-score">/{totalQuestions}</span>
+              </span>
+            </div>
+            <p className="score-text">Your Score</p>
+          </div>
+        </div>
+        <div className="result-body">
+          <h3 className="review-title">Question Review</h3>
+          <div className="review-container">
+            {reviewData.map((q, index) => {
+              const question = q.question_id || {};
+              const isCorrect =
+                q.is_correct !== undefined ? q.is_correct : false;
+              return (
+                <div
+                  key={index}
+                  className={`review-card ${isCorrect ? "correct" : "wrong"}`}
+                >
+                  <div className="card-header">
+                    <span className="card-number">Q{index + 1}</span>
+                    <h4 className="card-question">
+                      {question.question_text || `Question ${index + 1}`}
+                    </h4>
+                  </div>
+                  <p className="card-answer">
+                    Your Answer:{" "}
+                    <span>{q.selected_option || "Unanswered"}</span>
+                  </p>
+                  <p className="card-correct">
+                    Correct Answer:{" "}
+                    <span>{question.correct_option || "Not provided"}</span>
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="button-section">
+            <button onClick={handleBackToExams} className="back-button">
+              Back to Exams
+            </button>
+            <button onClick={handleRetryExam} className="retry-button">
+              Retry Exam
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

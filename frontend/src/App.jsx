@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/exams" element={<ExamList />} />
           <Route path="/exam/:id" element={<ExamAttempt />} />
-          <Route path="/result/:result_id" element={<Result />} />
+          <Route path="/result/:id" element={<Result />} />
         </Routes>
       </div>
     </Router>
