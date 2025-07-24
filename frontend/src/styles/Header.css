@@ -6,7 +6,7 @@
   top: 0;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
-  height: 3.5rem; /* Fixed height for consistency */
+  height: 3.5rem; /* Consistent height */
 }
 
 .header-wrapper .header-content {

@@ -1,8 +1,8 @@
 /* frontend/src/styles/Result.css */
 .result-page-wrapper {
   max-width: 4xl;
-  margin: 3rem auto;
-  padding: 1rem;
+  margin: 0 auto; /* Removed padding, handled by App */
+  padding: 0; /* Remove padding to avoid extra space */
 }
 
 .result-page-wrapper .result-container {
@@ -10,6 +10,7 @@
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 3.5rem; /* Match header height to avoid overlap */
 }
 
 .result-page-wrapper .result-header {

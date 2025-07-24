@@ -6,6 +6,7 @@
   justify-content: center;
   padding: 1rem;
   background-color: #f0f4f8;
+  margin-top: 3.5rem; /* Match header height */
 }
 
 .login-page-wrapper .login-container {

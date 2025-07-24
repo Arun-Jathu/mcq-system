@@ -2,6 +2,7 @@
 .exam-list-page-wrapper {
   padding: 1rem;
   background-color: #f0f4f8;
+  margin-top: 3.5rem; /* Match header height */
 }
 
 .exam-list-page-wrapper .exam-list-content {
