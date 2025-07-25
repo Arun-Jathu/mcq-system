@@ -74,7 +74,21 @@ function ExamList() {
             Select an exam to begin your assessment
           </p>
           <button className="add-button" onClick={() => setShowModal(true)}>
-            <span className="plus-sign">+</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4" /* Reduced size to h-4 w-4 */
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+            <span>Generate AI Questions</span>
           </button>
         </div>
         <div className="exam-grid">
@@ -140,25 +154,27 @@ function ExamList() {
         </div>
       </div>
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Create New Exam</h2>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Exam Title"
-            />
-            <select
-              value={difficulty}
-              onChange={(e) => setDifficulty(e.target.value)}
-            >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
-            <button onClick={handleAddExam}>Generate</button>
-            <button onClick={() => setShowModal(false)}>Cancel</button>
+        <div className={`modal-backdrop ${showModal ? "modal-active" : ""}`}>
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Create New Exam</h2>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. Advanced Mathematics"
+              />
+              <select
+                value={difficulty}
+                onChange={(e) => setDifficulty(e.target.value)}
+              >
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+              <button onClick={handleAddExam}>Generate</button>
+              <button onClick={() => setShowModal(false)}>Cancel</button>
+            </div>
           </div>
         </div>
       )}
