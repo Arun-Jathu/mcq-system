@@ -7,45 +7,63 @@ function ExamList() {
   const [exams, setExams] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/api/exams")
-      .then((response) => {
-        console.log("Request URL:", response.config.url);
-        console.log("Response data:", response.data);
-        setExams(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching exams:", error);
-        if (error.response) {
-          setError(
-            `Failed to load exams. Server returned ${error.response.status}: ${error.response.statusText}`
-          );
-        } else if (error.request) {
-          setError("Failed to load exams. No response from server.");
-        } else {
-          setError(`Error: ${error.message}`);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    fetchExams();
   }, []);
 
-  if (error) return <div>{error}</div>;
-  if (loading) return <div>Loading exams...</div>;
+  const fetchExams = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("/api/exams");
+      console.log("Request URL:", response.config.url);
+      console.log("Response data:", response.data);
+      setExams(response.data);
+    } catch (error) {
+      console.error("Error fetching exams:", error);
+      if (error.response) {
+        setError(
+          `Failed to load exams. Server returned ${error.response.status}: ${error.response.statusText}`
+        );
+      } else if (error.request) {
+        setError("Failed to load exams. No response from server.");
+      } else {
+        setError(`Error: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const startExam = (id) => {
     navigate(`/exam/${id}`);
   };
 
-  const addNewTest = () => {
-    console.log("Add new test clicked");
-    // Example: navigate('/create-test');
+  const handleAddExam = async () => {
+    if (!title.trim()) {
+      setError("Please enter a valid exam title");
+      return;
+    }
+    try {
+      const response = await axios.post("/api/create-exam", {
+        title,
+        difficulty,
+      });
+      await fetchExams(); // Refresh the exam list
+      setTitle("");
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error creating exam:", error);
+      setError("Failed to create exam. Please try again.");
+    }
   };
+
+  if (error) return <div>{error}</div>;
+  if (loading) return <div>Loading exams...</div>;
 
   return (
     <div className="exam-list-page-wrapper">
@@ -55,7 +73,7 @@ function ExamList() {
           <p className="page-subtitle">
             Select an exam to begin your assessment
           </p>
-          <button className="add-button" onClick={addNewTest}>
+          <button className="add-button" onClick={() => setShowModal(true)}>
             <span className="plus-sign">+</span>
           </button>
         </div>
@@ -85,8 +103,8 @@ function ExamList() {
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    {exam.questions || 5} questions •{" "}
-                    {exam.time || "10 minutes"}
+                    {exam.questions ? exam.questions.length : 5} questions • 10
+                    minutes
                   </div>
                   <div className="card-detail">
                     <svg
@@ -103,7 +121,9 @@ function ExamList() {
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    {exam.level || "Beginner"} level
+                    {difficulty.charAt(0).toUpperCase() + difficulty.slice(1) ||
+                      "Beginner"}{" "}
+                    level
                   </div>
                   <div className="card-action">
                     <button
@@ -119,6 +139,29 @@ function ExamList() {
           )}
         </div>
       </div>
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Create New Exam</h2>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Exam Title"
+            />
+            <select
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+            >
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+            <button onClick={handleAddExam}>Generate</button>
+            <button onClick={() => setShowModal(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
