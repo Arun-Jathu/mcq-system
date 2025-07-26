@@ -30,7 +30,7 @@ const ExamHeader = ({ examTitle, timeLeft, progress }) => {
     >
       <div
         style={{
-          position: "absolute",
+          position: "fixed",
           top: 0,
           left: 0,
           right: 0,
@@ -43,16 +43,16 @@ const ExamHeader = ({ examTitle, timeLeft, progress }) => {
           margin: "0 auto",
           height: "5rem",
           overflow: "visible",
-          transform: isScrolled ? "translateY(0)" : "translateY(3.5rem)",
         }}
       >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-start",
-            padding: "0.5rem 0",
+            alignItems: "center",
+            justifyContent: "center",
             height: "100%",
+            padding: "0 1rem",
           }}
         >
           <h2
@@ -60,17 +60,20 @@ const ExamHeader = ({ examTitle, timeLeft, progress }) => {
               fontSize: "1.25rem",
               fontWeight: 700,
               color: "#f9fafb",
-              margin: 0,
+              margin: "0 0 0.5rem 0",
+              textAlign: "center",
+              whiteSpace: "normal",
             }}
           >
-            Exam: {examTitle || "Untitled Exam"}
+            {examTitle}
           </h2>
           <div
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
               color: "#dbeafe",
-              fontSize: "1rem",
+              fontSize: "1.125rem",
               fontWeight: 500,
             }}
           >
@@ -97,8 +100,8 @@ const ExamHeader = ({ examTitle, timeLeft, progress }) => {
         </div>
         <div
           style={{
-            marginTop: "1rem",
-            width: "100%",
+            marginTop: "0.75rem",
+            padding: "0 1rem",
           }}
         >
           <div
@@ -128,11 +131,13 @@ const ExamHeader = ({ examTitle, timeLeft, progress }) => {
               justifyContent: "space-between",
               marginTop: "0.5rem",
               fontSize: "0.875rem",
+              flexWrap: "wrap",
             }}
           >
-            <span style={{ color: "#60a5fa" }}>
-              Question 1 to 5 of{" "}
-              {progress > 0 ? Math.ceil(progress / 20) * 5 : 5}
+            <span style={{ color: "#60a5fa", marginBottom: "0.25rem" }}>
+              Question {indexOfFirstQuestion + 1} to{" "}
+              {Math.min(indexOfLastQuestion, questions.length)} of{" "}
+              {questions.length}
             </span>
             <span style={{ color: "#3b82f6" }}>{Math.round(progress)}%</span>
           </div>

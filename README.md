@@ -23,6 +23,28 @@ Welcome to the Exam Application, a web-based platform for creating, attempting, 
 - Detailed results page with question review.
 - Responsive design for desktop and mobile devices.
 
+## Screenshots
+
+### Desktop Views
+
+| Login Page                                      | Question List Page                                              |
+| ----------------------------------------------- | --------------------------------------------------------------- |
+| ![Desktop Login](screenshots/desktop-login.png) | ![Desktop Question List](screenshots/desktop-question-list.png) |
+
+| Attempt Page                                        | Results Page                                        |
+| --------------------------------------------------- | --------------------------------------------------- |
+| ![Desktop Attempt](screenshots/desktop-attempt.png) | ![Desktop Results](screenshots/desktop-results.png) |
+
+### Mobile Views
+
+| Login Page                                    | Question List Page                                            |
+| --------------------------------------------- | ------------------------------------------------------------- |
+| ![Mobile Login](screenshots/mobile-login.png) | ![Mobile Question List](screenshots/mobile-question-list.png) |
+
+| Attempt Page                                      | Results Page                                      |
+| ------------------------------------------------- | ------------------------------------------------- |
+| ![Mobile Attempt](screenshots/mobile-attempt.png) | ![Mobile Results](screenshots/mobile-results.png) |
+
 ## Prerequisites
 
 - **Frontend**: Node.js (v14.x or later), npm (v6.x or later)

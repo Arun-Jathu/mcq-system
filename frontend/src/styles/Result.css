@@ -243,6 +243,7 @@
   .result-page-wrapper {
     margin: 1rem;
     max-width: 100%;
+    overflow-x: hidden; /* Prevent horizontal overflow */
   }
 
   .result-page-wrapper .result-header {
@@ -276,6 +277,19 @@
 
   .result-page-wrapper .review-title {
     font-size: 1.25rem;
+  }
+
+  .result-page-wrapper .review-container {
+    grid-template-columns: 1fr; /* Force single column on mobile */
+    padding: 0 1rem; /* Add horizontal padding to fit content */
+    max-width: 100%; /* Ensure container fits screen */
+    margin: 0 auto; /* Center the container */
+  }
+
+  .result-page-wrapper .review-card {
+    max-width: 100%; /* Prevent cards from exceeding container */
+    width: 100%; /* Ensure full width within constraints */
+    box-sizing: border-box; /* Include padding in width calculation */
   }
 
   .result-page-wrapper .card-question {

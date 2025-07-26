@@ -138,38 +138,44 @@ function ExamAttempt() {
       </div>
     );
 
-  // Simple mobile check using window width
   const isMobile = window.innerWidth <= 768;
 
   return (
     <div className="exam-attempt-page-wrapper">
       <div className="exam-container">
         <div
-          className="exam-header"
           style={{
             position: isMobile ? "sticky" : "fixed",
             top: isMobile ? "env(safe-area-inset-top)" : 0,
             left: 0,
             right: 0,
             zIndex: 20,
-            padding: "1rem",
+            padding: isMobile ? "0.5rem" : "1.5rem", // Reduced padding on mobile
             backgroundColor: "#4f46e5",
             boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
             width: "100%",
             maxWidth: "800px",
             margin: "0 auto",
-            height: isMobile ? "5rem" : "auto",
-            transform: isMobile ? "none" : "translateY(3.5rem)",
+            height: isMobile ? "4rem" : "auto", // Reduced height on mobile
             overflow: "visible",
           }}
         >
-          <div className="header-content">
+          {!isMobile && (
             <h2 className="exam-title">
               Exam:{" "}
               {questions[0]?.exam_title ||
                 questions[0]?.title ||
                 "Untitled Exam"}
             </h2>
+          )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: isMobile ? "0" : "1rem",
+            }}
+          >
             <div className="timer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -185,17 +191,30 @@ function ExamAttempt() {
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>{formatTime(timeLeft)}</span>
+              <span style={{ fontSize: isMobile ? "1rem" : "1.25rem" }}>
+                {formatTime(timeLeft)}
+              </span>
             </div>
           </div>
-          <div className="progress-bar-container">
+          <div
+            className="progress-bar-container"
+            style={{
+              marginTop: isMobile ? "0.5rem" : "1rem",
+              width: isMobile ? "80%" : "100%", // Reduced width on mobile
+              marginLeft: isMobile ? "auto" : "0",
+              marginRight: isMobile ? "auto" : "0", // Center on mobile
+            }}
+          >
             <div className="progress-bar-bg">
               <div
                 className="progress-bar"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <div className="progress-text">
+            <div
+              className="progress-text"
+              style={{ fontSize: isMobile ? "0.75rem" : "0.875rem" }}
+            >
               <span>
                 Question {indexOfFirstQuestion + 1} to{" "}
                 {Math.min(indexOfLastQuestion, questions.length)} of{" "}
@@ -207,7 +226,7 @@ function ExamAttempt() {
         </div>
         <div
           className="question-section"
-          style={{ paddingTop: isMobile ? "8rem" : "7rem" }}
+          style={{ paddingTop: isMobile ? "6rem" : "7rem" }} // Adjusted for reduced header height
         >
           {currentQuestions.map((question, index) => (
             <div key={question._id} className="question-item">

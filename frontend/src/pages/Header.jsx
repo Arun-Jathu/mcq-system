@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
 
@@ -6,6 +6,7 @@ function Header() {
   const navigate = useNavigate();
   const isLoggedIn = true; // Mock login state; replace with actual auth logic
   const username = "Test User"; // Mock username; replace with actual user data
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
 
   const handleLogout = () => {
     // Add logout logic here (e.g., clear session, redirect to login)
@@ -14,6 +15,11 @@ function Header() {
 
   const handleNav = (path) => {
     navigate(path);
+    setIsMobileMenuOpen(false); // Close menu on navigation
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -36,7 +42,7 @@ function Header() {
           </svg>
           <span className="title">QuizMaster</span>
         </div>
-        <nav className="nav-links">
+        <nav className={`nav-links ${isMobileMenuOpen ? "mobile-open" : ""}`}>
           <a href="#" onClick={() => handleNav("/exams")} className="nav-link">
             Exams
           </a>
@@ -53,13 +59,23 @@ function Header() {
             </button>
           )}
         </nav>
-        {isLoggedIn && (
-          <div className="user-profile">
-            <span className="username">{username}</span>
-            <div className="avatar"></div>
-          </div>
-        )}
+        <div className="header-right">
+          {isLoggedIn && (
+            <div className="user-profile">
+              <span className="username">{username}</span>
+              <div className="avatar"></div>
+            </div>
+          )}
+          <button className="hamburger" onClick={toggleMobileMenu}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
+      {isMobileMenuOpen && (
+        <div className="mobile-menu-overlay" onClick={toggleMobileMenu}></div>
+      )}
     </header>
   );
 }
