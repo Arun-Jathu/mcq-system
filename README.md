@@ -52,6 +52,32 @@ Welcome to the Exam Application, a web-based platform for creating, attempting, 
 - **API Keys**: OpenAI API key (for AI-generated questions, stored in `.env` as `OPENAI_API_KEY`)
 - Ensure MongoDB is running locally or configure a remote URI.
 
+## Project Overview
+
+### Tech Stack Used
+
+This project is built using the following technologies:
+
+- **Frontend**:
+  - React: A JavaScript library for building user interfaces.
+  - Axios: For making HTTP requests to the backend API.
+  - React Router DOM: For client-side routing.
+  - React Confetti: For adding celebratory effects (e.g., on result page).
+  - Tailwind CSS: For styling with utility-first classes.
+- **Backend** :
+  - Node.js/Express: For API endpoints (e.g., `/api/exams/result/${id}`).
+  - MongoDB: For storing exam data (assumed based on `_id` usage).
+- **Tools**:
+  - Git: For version control.
+  - npm: For package management.
+
+### Sample Credentials
+
+If your application includes authentication, you can use the following sample credentials to test the login functionality:
+
+- **Username**: test@serendi.com
+- **Password**: 1234
+
 ## Installation
 
 ### Frontend
