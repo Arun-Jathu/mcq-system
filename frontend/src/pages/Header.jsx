@@ -9,7 +9,6 @@ function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
 
   const handleLogout = () => {
-    // Add logout logic here (e.g., clear session, redirect to login)
     navigate("/");
   };
 

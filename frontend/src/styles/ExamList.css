@@ -1,7 +1,7 @@
 .exam-list-page-wrapper {
   padding: 1rem;
   background-color: #f0f4f8;
-  margin-top: 3.5rem; /* Match header height */
+  margin-top: 3.5rem; 
 }
 
 .exam-list-page-wrapper .exam-list-content {
@@ -46,10 +46,10 @@
 }
 
 .exam-list-page-wrapper .add-button svg {
-  width: 24px; /* Ensure SVG size */
-  height: 24px; /* Ensure SVG size */
-  display: inline-block; /* Prevent flex issues */
-  vertical-align: middle; /* Align with text */
+  width: 24px; 
+  height: 24px; 
+  display: inline-block; 
+  vertical-align: middle; 
 }
 
 .exam-list-page-wrapper .add-button:hover {

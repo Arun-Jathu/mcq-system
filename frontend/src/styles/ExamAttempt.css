@@ -2,12 +2,12 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0;
-  margin-top: 3.5rem; /* Space above the fixed header on desktop */
+  margin-top: 3.5rem; 
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure full viewport height */
-  position: relative; /* Provide context for positioning */
-  overflow-x: hidden; /* Prevent horizontal overflow */
+  min-height: 100vh; 
+  position: relative;
+  overflow-x: hidden; 
 }
 
 .exam-attempt-page-wrapper .exam-container {
@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  position: relative; /* Ensure container is positioned for sticky */
+  position: relative; 
 }
 
 .exam-attempt-page-wrapper .exam-title {
@@ -44,7 +44,7 @@
 
 .exam-attempt-page-wrapper .progress-bar-container {
   margin-top: 1rem;
-  width: 100%; /* Ensure full width */
+  width: 100%; 
 }
 
 .exam-attempt-page-wrapper .progress-bar-bg {
@@ -85,7 +85,7 @@
 
 .exam-attempt-page-wrapper .question-section {
   padding: 2rem;
-  flex-grow: 1; /* Allow it to take available space */
+  flex-grow: 1; 
 }
 
 .exam-attempt-page-wrapper .question-item {
@@ -150,8 +150,8 @@
   position: sticky;
   bottom: 0;
   width: 100%;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for separation */
-  z-index: 10; /* Ensure it stays above content */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+  z-index: 10; 
 }
 
 .exam-attempt-page-wrapper button {
@@ -241,16 +241,16 @@
   .exam-attempt-page-wrapper {
     margin: 0;
     max-width: 100%;
-    padding: 0 1rem; /* Add slight padding to avoid edge cutoff */
+    padding: 0 1rem; 
   }
 
   .exam-attempt-page-wrapper .exam-title {
-    display: none; /* Hide title on mobile */
+    display: none; 
   }
 
   .exam-attempt-page-wrapper .timer {
-    justify-content: center; /* Center timer on mobile */
-    font-size: 1.125rem; /* Slightly larger for clarity */
+    justify-content: center; 
+    font-size: 1.125rem; 
   }
 
   .exam-attempt-page-wrapper .timer-icon {
@@ -259,20 +259,20 @@
   }
 
   .exam-attempt-page-wrapper .progress-bar-container {
-    width: 90%; /* Slightly wider than 80% for balance */
-    margin: 0.5rem auto; /* Center and reduce margin */
+    width: 90%; 
+    margin: 0.5rem auto; 
   }
 
   .exam-attempt-page-wrapper .progress-bar-bg {
-    height: 0.5rem; /* Smaller height */
+    height: 0.5rem; 
   }
 
   .exam-attempt-page-wrapper .progress-text {
-    font-size: 0.7rem; /* Smaller text */
-    margin-top: 0.25rem; /* Reduced margin */
+    font-size: 0.7rem; 
+    margin-top: 0.25rem; 
   }
 
   .exam-attempt-page-wrapper .question-section {
-    padding: 1.5rem; /* Reduced padding */
+    padding: 1.5rem; 
   }
 }

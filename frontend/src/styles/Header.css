@@ -5,23 +5,23 @@
   top: 0;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
-  height: 3.5rem; /* Consistent height */
+  height: 3.5rem; 
 }
 
 .header-wrapper .header-content {
   max-width: 7xl;
   margin: 0 auto;
-  padding: 0 1.5rem; /* Simplified padding */
+  padding: 0 1.5rem; 
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Ensure all children are centered */
-  height: 100%; /* Full height of wrapper */
+  align-items: center; 
+  height: 100%; 
 }
 
 .header-wrapper .logo-container {
   display: flex;
-  align-items: center; /* Center logo and title */
-  gap: 0.5rem; /* Replace margin with gap */
+  align-items: center; 
+  gap: 0.5rem; 
 }
 
 .header-wrapper .logo {
@@ -43,13 +43,13 @@
 
 .header-wrapper .nav-links {
   display: flex;
-  align-items: center; /* Vertically center nav links */
+  align-items: center; 
   gap: 2rem;
-  margin-left: 2rem; /* Spacing from logo/title */
+  margin-left: 2rem; 
 }
 
 .header-wrapper .nav-links.mobile-open {
-  display: flex; /* Show on mobile when open */
+  display: flex; 
 }
 
 .header-wrapper .nav-link {
@@ -89,7 +89,7 @@
 
 .header-wrapper .user-profile {
   display: flex;
-  align-items: center; /* Center avatar and username */
+  align-items: center; 
   gap: 0.75rem;
   padding: 0 0.5rem;
 }
@@ -110,11 +110,11 @@
   justify-content: center;
   color: white;
   font-weight: 500;
-  line-height: 2rem; /* Match avatar height */
+  line-height: 2rem; 
 }
 
 .header-wrapper .hamburger {
-  display: none; /* Hidden on desktop */
+  display: none; 
   background: none;
   border: none;
   cursor: pointer;
@@ -149,7 +149,7 @@
 
 .header-wrapper .nav-links.mobile-open {
   position: absolute;
-  top: 3.5rem; /* Below header */
+  top: 3.5rem; 
   left: 0;
   right: 0;
   background-color: white;
@@ -170,16 +170,16 @@
 
 @media (max-width: 768px) {
   .header-wrapper .nav-links {
-    display: none; /* Hide by default on mobile */
+    display: none; 
   }
 
   .header-wrapper .hamburger {
-    display: block; /* Show hamburger on mobile */
+    display: block; 
   }
 
   .header-wrapper .header-content {
-    padding: 0 1rem; /* Reduced padding on mobile */
-    height: 3rem; /* Reduced height on mobile */
+    padding: 0 1rem; 
+    height: 3rem; 
   }
 
   .header-wrapper .title {
@@ -199,7 +199,7 @@
   .header-wrapper .avatar {
     height: 1.75rem;
     width: 1.75rem;
-    line-height: 1.75rem; /* Adjust for mobile size */
+    line-height: 1.75rem; 
   }
 
   .header-wrapper .username {
@@ -207,7 +207,7 @@
   }
 
   .header-wrapper .nav-links.mobile-open {
-    display: flex; /* Show when mobile menu is open */
+    display: flex; 
   }
 
   .header-wrapper .mobile-menu-overlay {

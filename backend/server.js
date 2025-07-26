@@ -47,8 +47,8 @@ app.post('/api/create-exam', async (req, res) => {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
-      max_tokens: 500, // Increased to accommodate more data
-      temperature: 0.7, // Adjusted for more consistent output
+      max_tokens: 500, 
+      temperature: 0.7, 
     });
 
     const rawResponse = response.choices[0].message.content.trim();
@@ -57,7 +57,6 @@ app.post('/api/create-exam', async (req, res) => {
     // Validate and parse JSON
     let examData;
     try {
-      // Extract JSON array using regex, ensuring it starts with [ and ends with ]
       const jsonMatch = rawResponse.match(/^(\[[\s\S]*\])\s*$/);
       if (!jsonMatch || !jsonMatch[1]) {
         throw new Error('No valid JSON array detected in AI response');
@@ -107,7 +106,7 @@ app.post('/api/create-exam', async (req, res) => {
       await session.commitTransaction();
       session.endSession();
 
-      res.status(201).json(savedExam); // 201 for resource creation
+      res.status(201).json(savedExam); 
     } catch (dbError) {
       await session.abortTransaction();
       session.endSession();

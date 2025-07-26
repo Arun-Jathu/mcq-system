@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const resultSchema = new mongoose.Schema({
-  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Updated to ObjectId
-  exam_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' }, // Updated to ObjectId
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, 
+  exam_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' }, 
   score: Number,
   answers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
 });

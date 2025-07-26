@@ -24,7 +24,7 @@ const ExamHeader = ({ examTitle, timeLeft, progress }) => {
     <div
       style={{
         position: "relative",
-        height: "5rem", // Placeholder height
+        height: "5rem",
         backgroundColor: "#f9fafb",
       }}
     >

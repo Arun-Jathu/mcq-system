@@ -14,7 +14,7 @@ function ExamAttempt() {
   const [timeLeft, setTimeLeft] = useState(0);
   const timerRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 5; // Display 5 questions at a time
+  const questionsPerPage = 5;
 
   useEffect(() => {
     setLoading(true);
@@ -150,13 +150,13 @@ function ExamAttempt() {
             left: 0,
             right: 0,
             zIndex: 20,
-            padding: isMobile ? "0.5rem" : "1.5rem", // Reduced padding on mobile
+            padding: isMobile ? "0.5rem" : "1.5rem",
             backgroundColor: "#4f46e5",
             boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
             width: "100%",
             maxWidth: "800px",
             margin: "0 auto",
-            height: isMobile ? "4rem" : "auto", // Reduced height on mobile
+            height: isMobile ? "4rem" : "auto",
             overflow: "visible",
           }}
         >
@@ -200,9 +200,9 @@ function ExamAttempt() {
             className="progress-bar-container"
             style={{
               marginTop: isMobile ? "0.5rem" : "1rem",
-              width: isMobile ? "80%" : "100%", // Reduced width on mobile
+              width: isMobile ? "80%" : "100%",
               marginLeft: isMobile ? "auto" : "0",
-              marginRight: isMobile ? "auto" : "0", // Center on mobile
+              marginRight: isMobile ? "auto" : "0",
             }}
           >
             <div className="progress-bar-bg">
@@ -226,7 +226,7 @@ function ExamAttempt() {
         </div>
         <div
           className="question-section"
-          style={{ paddingTop: isMobile ? "6rem" : "7rem" }} // Adjusted for reduced header height
+          style={{ paddingTop: isMobile ? "6rem" : "7rem" }}
         >
           {currentQuestions.map((question, index) => (
             <div key={question._id} className="question-item">
