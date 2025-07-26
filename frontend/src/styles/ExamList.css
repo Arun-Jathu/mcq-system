@@ -38,11 +38,18 @@
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: inline-flex; /* Changed to inline-flex for single-line */
+  display: inline-flex;
   align-items: center;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
   box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
   animation: pulse 2s infinite;
+}
+
+.exam-list-page-wrapper .add-button svg {
+  width: 24px; /* Ensure SVG size */
+  height: 24px; /* Ensure SVG size */
+  display: inline-block; /* Prevent flex issues */
+  vertical-align: middle; /* Align with text */
 }
 
 .exam-list-page-wrapper .add-button:hover {

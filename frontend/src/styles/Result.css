@@ -1,8 +1,7 @@
-/* frontend/src/styles/Result.css */
 .result-page-wrapper {
-  max-width: 4xl;
-  margin: 0 auto; /* Removed padding, handled by App */
-  padding: 0; /* Remove padding to avoid extra space */
+  max-width: 800px; /* Fixed max-width to a concrete value */
+  margin: 0 auto;
+  padding: 0;
 }
 
 .result-page-wrapper .result-container {
@@ -10,7 +9,7 @@
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 3.5rem; /* Match header height to avoid overlap */
+  margin-top: 3.5rem; /* Consistent with header offset */
 }
 
 .result-page-wrapper .result-header {
@@ -39,21 +38,22 @@
 }
 
 .result-page-wrapper .result-title {
-  font-size: 1.5rem;
+  font-size: 1.875rem; /* Increased for better visibility */
   font-weight: 700;
   color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .result-page-wrapper .score-section {
   position: relative;
+  margin-top: 1rem;
 }
 
 .result-page-wrapper .progress-ring {
   position: relative;
   display: inline-block;
-  width: 10rem;
-  height: 10rem;
+  width: 12rem; /* Increased size */
+  height: 12rem;
 }
 
 .result-page-wrapper .progress-ring svg {
@@ -64,7 +64,7 @@
 
 .result-page-wrapper .progress-ring circle {
   fill: none;
-  stroke-width: 10;
+  stroke-width: 15; /* Thicker stroke for clarity */
   stroke-linecap: round;
   cx: 50%;
   cy: 50%;
@@ -72,11 +72,11 @@
 }
 
 .result-page-wrapper .ring-bg {
-  stroke: rgba(255, 255, 255, 0.2);
+  stroke: rgba(255, 255, 255, 0.3); /* Lighter background */
 }
 
 .result-page-wrapper .ring-progress {
-  stroke: white;
+  stroke: #ffffff; /* Pure white for contrast */
   stroke-dasharray: 283;
   stroke-dashoffset: calc(283 - (283 * var(--progress)) / 100);
   transition: stroke-dashoffset 1s ease;
@@ -87,118 +87,86 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.5rem;
+  font-size: 3rem; /* Larger text */
   font-weight: 700;
   color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Added shadow for readability */
 }
 
 .result-page-wrapper .total-score {
-  font-size: 1.5rem;
+  font-size: 1.75rem; /* Increased size */
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.8); /* Slightly transparent */
 }
 
 .result-page-wrapper .score-text {
-  font-size: 1rem;
+  font-size: 1.25rem; /* Increased size */
   color: #a5b4fc;
-  margin-top: 0.5rem;
-}
-
-.result-page-wrapper .confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.result-page-wrapper .confetti::before,
-.result-page-wrapper .confetti::after {
-  content: '';
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: white;
-  animation: fall 3s infinite;
-}
-
-.result-page-wrapper .confetti::before {
-  top: -10px;
-  left: 20%;
-  animation-delay: 0s;
-}
-
-.result-page-wrapper .confetti::after {
-  top: -10px;
-  left: 70%;
-  animation-delay: 1s;
-}
-
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  margin-top: 1rem;
 }
 
 .result-page-wrapper .result-body {
-  padding: 2rem;
+  padding: 2.5rem; /* Increased padding */
 }
 
 .result-page-wrapper .review-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem; /* Increased size */
   font-weight: 600;
   color: #1f2937;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem; /* More spacing */
 }
 
 .result-page-wrapper .review-container {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem; /* Increased gap */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
 }
 
 .result-page-wrapper .review-card {
   background-color: #f9fafb;
   border-radius: 0.375rem;
-  padding: 1rem;
-  border-left: 4px solid;
+  padding: 1.5rem; /* Increased padding */
+  border-left: 6px solid; /* Thicker border */
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
 .result-page-wrapper .review-card.correct {
   border-left-color: #10b981;
+  background-color: #f0fdf4; /* Light green for correct */
 }
 
 .result-page-wrapper .review-card.wrong {
   border-left-color: #ef4444;
+  background-color: #fef2f2; /* Light red for wrong */
 }
 
 .result-page-wrapper .review-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px); /* Stronger lift */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
 }
 
 .result-page-wrapper .card-header {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem; /* More spacing */
 }
 
 .result-page-wrapper .card-number {
   background-color: #4f46e5;
   color: white;
   border-radius: 9999px;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.75rem; /* Slightly larger */
+  height: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
-  margin-right: 0.75rem;
+  font-size: 1rem;
+  margin-right: 1rem;
 }
 
 .result-page-wrapper .card-question {
-  font-size: 1rem;
+  font-size: 1.125rem; /* Increased size */
   font-weight: 500;
   color: #1f2937;
   flex-grow: 1;
@@ -206,41 +174,45 @@
 
 .result-page-wrapper .card-answer,
 .result-page-wrapper .card-correct {
-  font-size: 0.875rem;
+  font-size: 1rem; /* Increased size */
   color: #374151;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem; /* More spacing */
 }
 
 .result-page-wrapper .card-answer span,
 .result-page-wrapper .card-correct span {
-  font-weight: 500;
+  font-weight: 600; /* Bolder text */
+  color: #1f2937; /* Darker for contrast */
 }
 
 .result-page-wrapper .button-section {
-  margin-top: 2rem;
+  margin-top: 2.5rem; /* More spacing */
   display: flex;
   justify-content: space-between;
+  gap: 1rem; /* Space between buttons */
 }
 
 .result-page-wrapper .back-button,
 .result-page-wrapper .retry-button {
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 2rem; /* Increased padding */
   border-radius: 0.375rem;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.125rem; /* Increased size */
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  width: 48%; /* Equal width on desktop */
 }
 
 .result-page-wrapper .back-button {
   background-color: white;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  border: 2px solid #4f46e5; /* Stronger border */
+  color: #4f46e5; /* Matching border color */
 }
 
 .result-page-wrapper .back-button:hover {
   background-color: #f3f4f6;
-  border-color: #9ca3af;
+  border-color: #4338ca; /* Darker on hover */
+  color: #4338ca;
 }
 
 .result-page-wrapper .retry-button {
@@ -255,7 +227,7 @@
 .result-page-wrapper .back-button:focus,
 .result-page-wrapper .retry-button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.5);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.6); /* Stronger focus */
 }
 
 .result-page-wrapper .loader {
@@ -269,36 +241,55 @@
 
 @media (max-width: 768px) {
   .result-page-wrapper {
-    margin: 1.5rem auto;
+    margin: 1rem;
+    max-width: 100%;
+  }
+
+  .result-page-wrapper .result-header {
+    padding: 1.5rem;
   }
 
   .result-page-wrapper .result-title {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+  }
+
+  .result-page-wrapper .progress-ring {
+    width: 10rem;
+    height: 10rem;
   }
 
   .result-page-wrapper .score-value {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
 
   .result-page-wrapper .total-score {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
-  .result-page-wrapper .review-title {
+  .result-page-wrapper .score-text {
     font-size: 1rem;
   }
 
+  .result-page-wrapper .result-body {
+    padding: 1.5rem;
+  }
+
+  .result-page-wrapper .review-title {
+    font-size: 1.25rem;
+  }
+
   .result-page-wrapper .card-question {
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
   .result-page-wrapper .button-section {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .result-page-wrapper .back-button,
   .result-page-wrapper .retry-button {
     width: 100%;
+    padding: 0.75rem 1.5rem;
   }
 }

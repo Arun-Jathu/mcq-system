@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Confetti from "react-confetti"; // Install via: npm install react-confetti
 import "../styles/Result.css";
 
 function Result() {
@@ -9,6 +10,7 @@ function Result() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -28,6 +30,7 @@ function Result() {
           JSON.stringify(response.data, null, 2)
         );
         setResult(response.data);
+        if (response.data.score > 0) setShowConfetti(true); // Trigger confetti on passing score
       } catch (error) {
         console.error("Error fetching result:", error);
         setError(
@@ -40,13 +43,14 @@ function Result() {
       }
     };
     fetchResult();
-
-    // Confetti effect on load
-    const confetti = document.createElement("div");
-    confetti.className = "confetti";
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 3000);
   }, [id]);
+
+  useEffect(() => {
+    if (showConfetti) {
+      const timer = setTimeout(() => setShowConfetti(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showConfetti]);
 
   const handleBackToExams = () => navigate("/exams");
   const handleRetryExam = () => {
@@ -73,11 +77,11 @@ function Result() {
   const progress =
     totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
 
-  // Use answers array with nested question_id
   const reviewData = result.answers || [];
 
   return (
     <div className="result-page-wrapper">
+      {showConfetti && <Confetti numberOfPieces={100} recycle={false} />}
       <div className="result-container">
         <div className="result-header">
           <div className="header-circle">

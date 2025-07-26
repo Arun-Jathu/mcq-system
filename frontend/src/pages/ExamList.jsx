@@ -76,19 +76,22 @@ function ExamList() {
           <button className="add-button" onClick={() => setShowModal(true)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4" /* Reduced size to h-4 w-4 */
+              width="24" /* Fixed size in pixels */
+              height="24" /* Fixed size in pixels */
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
+              stroke="white" /* Explicit white stroke */
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
+                d="M13 10V3L4 14h7v7l9-11h-7z" /* Original arrow path */
               />
             </svg>
             <span>Generate AI Questions</span>
+            {/* Debug fallback: Uncomment to test */}
+            {/* <div style={{ color: 'white' }}>Test</div> */}
           </button>
         </div>
         <div className="exam-grid">

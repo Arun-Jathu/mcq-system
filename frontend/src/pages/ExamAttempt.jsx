@@ -13,6 +13,8 @@ function ExamAttempt() {
   const [submitting, setSubmitting] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const timerRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const questionsPerPage = 5; // Display 5 questions at a time
 
   useEffect(() => {
     setLoading(true);
@@ -87,7 +89,7 @@ function ExamAttempt() {
         console.log("Navigating to:", `/result/${resultId}`);
         navigate(`/result/${resultId}`, { replace: true });
         setTimeout(() => {
-          if (window.location.pathname !== `/result/${resultId}`) {
+          if (window.pathname !== `/result/${resultId}`) {
             console.error("Navigation failed, forcing redirect");
             navigate(`/result/${resultId}`, { replace: true });
           }
@@ -112,24 +114,55 @@ function ExamAttempt() {
       ? (Object.keys(answers).length / questions.length) * 100
       : 0;
 
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const currentQuestions = questions.slice(
+    indexOfFirstQuestion,
+    indexOfLastQuestion
+  );
+  const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   if (error) return <div>{error}</div>;
   if (loading)
     return (
-      <div>
+      <div className="loading-state">
         Loading questions... <span className="loader">⏳</span>
       </div>
     );
   if (submitting)
     return (
-      <div>
+      <div className="loading-state">
         Submitting answers... <span className="loader">⏳</span>
       </div>
     );
 
+  // Simple mobile check using window width
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <div className="exam-attempt-page-wrapper">
       <div className="exam-container">
-        <div className="exam-header">
+        <div
+          className="exam-header"
+          style={{
+            position: isMobile ? "sticky" : "fixed",
+            top: isMobile ? "env(safe-area-inset-top)" : 0,
+            left: 0,
+            right: 0,
+            zIndex: 20,
+            padding: "1rem",
+            backgroundColor: "#4f46e5",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+            width: "100%",
+            maxWidth: "800px",
+            margin: "0 auto",
+            height: isMobile ? "5rem" : "auto",
+            transform: isMobile ? "none" : "translateY(3.5rem)",
+            overflow: "visible",
+          }}
+        >
           <div className="header-content">
             <h2 className="exam-title">
               Exam:{" "}
@@ -164,17 +197,24 @@ function ExamAttempt() {
             </div>
             <div className="progress-text">
               <span>
-                Question {Object.keys(answers).length + 1} of {questions.length}
+                Question {indexOfFirstQuestion + 1} to{" "}
+                {Math.min(indexOfLastQuestion, questions.length)} of{" "}
+                {questions.length}
               </span>
               <span>{Math.round(progress)}%</span>
             </div>
           </div>
         </div>
-        <div className="question-section">
-          {questions.map((question, index) => (
+        <div
+          className="question-section"
+          style={{ paddingTop: isMobile ? "8rem" : "7rem" }}
+        >
+          {currentQuestions.map((question, index) => (
             <div key={question._id} className="question-item">
               <div className="question-header">
-                <span className="question-number">Q{index + 1}</span>
+                <span className="question-number">
+                  Q{indexOfFirstQuestion + index + 1}
+                </span>
                 <h3 className="question-text">
                   {question.question_text ||
                     question.question ||
@@ -207,6 +247,25 @@ function ExamAttempt() {
               )}
             </div>
           ))}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
         <div className="submit-section">
           <button onClick={handleSubmit} disabled={loading || submitting}>

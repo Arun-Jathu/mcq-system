@@ -23,62 +23,103 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// New endpoint for creating an exam with questions
+// Middleware to handle uncaught errors
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err.stack);
+  res.status(500).json({ error: 'An unexpected server error occurred. Please try again later.' });
+});
+
+// Enhanced endpoint for creating an exam with questions
 app.post('/api/create-exam', async (req, res) => {
   const { title, difficulty } = req.body;
 
+  // Input validation
   if (!title || !difficulty) {
-    return res.status(400).json({ error: 'Title and difficulty are required' });
+    return res.status(400).json({ error: 'Title and difficulty are required fields.' });
+  }
+  if (!['easy', 'medium', 'hard'].includes(difficulty.toLowerCase())) {
+    return res.status(400).json({ error: 'Difficulty must be "easy", "medium", or "hard".' });
   }
 
-  const prompt = `Generate a ${difficulty} level exam with 5 multiple-choice questions based on the title "${title}". Return ONLY a valid JSON array where each object has the fields: "question_text" (string), "options" (array of 4 strings), and "correct_option" (string representing one of the options). Do not include any additional text.`;
+  const prompt = `You are an exam generator. Generate a valid JSON array of exactly 5 multiple-choice questions for a ${difficulty} level exam based on the topic "${title}". Each object in the array must have the following fields: "question_text" (a string with the question), "options" (an array of exactly 4 unique strings representing the choices), and "correct_option" (a string that matches one of the options). Return ONLY the JSON array with no additional text, comments, or formatting. Example: [{"question_text":"2+2?","options":["1","2","3","4"],"correct_option":"4"}]`;
 
   try {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
-      max_tokens: 300,
+      max_tokens: 500, // Increased to accommodate more data
+      temperature: 0.7, // Adjusted for more consistent output
     });
-    const rawResponse = response.choices[0].message.content;
+
+    const rawResponse = response.choices[0].message.content.trim();
     console.log('Raw OpenAI Response:', rawResponse);
 
+    // Validate and parse JSON
     let examData;
     try {
-      const jsonMatch = rawResponse.match(/\[[\s\S]*\]/);
-      if (jsonMatch && jsonMatch[0]) {
-        examData = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error('No valid JSON array found in response');
+      // Extract JSON array using regex, ensuring it starts with [ and ends with ]
+      const jsonMatch = rawResponse.match(/^(\[[\s\S]*\])\s*$/);
+      if (!jsonMatch || !jsonMatch[1]) {
+        throw new Error('No valid JSON array detected in AI response');
       }
+      examData = JSON.parse(jsonMatch[1]);
+
+      // Validate structure
+      if (!Array.isArray(examData) || examData.length !== 5) {
+        throw new Error('Expected exactly 5 questions in the JSON array');
+      }
+
+      examData.forEach((q, index) => {
+        if (!q.question_text || typeof q.question_text !== 'string') {
+          throw new Error(`Question ${index + 1} is missing or has invalid question_text`);
+        }
+        if (!Array.isArray(q.options) || q.options.length !== 4 || new Set(q.options).size !== 4) {
+          throw new Error(`Question ${index + 1} must have exactly 4 unique options`);
+        }
+        if (!q.options.includes(q.correct_option)) {
+          throw new Error(`Question ${index + 1} correct_option must be one of the options`);
+        }
+      });
     } catch (parseError) {
-      console.error('JSON Parsing Error:', parseError.message);
-      return res.status(500).json({ error: 'Invalid JSON response from AI. Please try again.' });
+      console.error('JSON Parsing or Validation Error:', parseError.message);
+      return res.status(500).json({ error: `Failed to process AI response: ${parseError.message}. Please adjust the input and try again.` });
     }
 
-    if (!Array.isArray(examData) || examData.length !== 5) {
-      throw new Error('Invalid exam data structure: Expected 5 questions');
+    // Database transaction-like approach (if supported by your MongoDB version)
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      const newExam = new Exam({
+        title,
+        description: `A ${difficulty} level exam on ${title}`,
+      });
+      const savedExam = await newExam.save({ session });
+
+      const questions = examData.map(q => new Question({
+        exam_id: savedExam._id,
+        question_text: q.question_text,
+        options: q.options,
+        correct_option: q.correct_option,
+      }));
+      await Question.insertMany(questions, { session });
+
+      await session.commitTransaction();
+      session.endSession();
+
+      res.status(201).json(savedExam); // 201 for resource creation
+    } catch (dbError) {
+      await session.abortTransaction();
+      session.endSession();
+      console.error('Database Error:', dbError);
+      return res.status(500).json({ error: 'Failed to save exam to database. Please try again.' });
     }
-
-    // Create new exam
-    const newExam = new Exam({
-      title,
-      description: `A ${difficulty} level exam on ${title}`, // Optional description
-    });
-    const savedExam = await newExam.save();
-
-    // Create and save questions linked to the exam
-    const questions = examData.map(q => new Question({
-      exam_id: savedExam._id,
-      question_text: q.question_text,
-      options: q.options,
-      correct_option: q.correct_option,
-    }));
-    await Question.insertMany(questions);
-
-    res.json(savedExam); // Return the saved exam for frontend refresh
   } catch (error) {
-    console.error('Error creating exam:', error);
-    res.status(500).json({ error: 'Failed to create exam' });
+    console.error('OpenAI or General Error:', error);
+    if (error.code === 'invalid_api_key' || error.response?.status === 401) {
+      return res.status(401).json({ error: 'Invalid OpenAI API key. Please check your configuration.' });
+    }
+    res.status(500).json({ error: 'Failed to generate exam due to an external service error. Please try again later.' });
   }
 });
 
